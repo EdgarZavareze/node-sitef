@@ -1,14 +1,15 @@
+import path from 'path';
 import SiTef from './src';
 import express from 'express'; 
 import http from 'http';
 import cors from 'cors';
-
 const sitef = new SiTef('./example/shared/bin/libclisitef.so');
 var configSiTef = {
     ip: process.env.SITEF_IP || '192.168.1.28',
     loja: process.env.SITEF_LOJA || '00000000',
     terminal: process.env.SITEF_TERMINAL || '00000000',
     reservado: process.env.SITEF_RESERVADO || '',
+    paramAdicionais: ''
 };
 const app = express();
 app.use(cors());
@@ -50,7 +51,6 @@ app.post('/agente/clisitef/startTransaction', function(req, res) {
     console.log(configSiTef);
     let rrr = sitef.configuraIntSiTefInterativoEx(configSiTef).then(response => {
         //console.log("then configuraIntSiTefInterativoEx");
-
         let chars = '0123456789abcdef'.split('');
         let uuid = [];
         let rnd = Math.random;
@@ -59,8 +59,7 @@ app.post('/agente/clisitef/startTransaction', function(req, res) {
             r = 0 | rnd()*16;
             uuid[i] = chars[(i == 19) ? (r & 0x3) | 0x8 : r & 0xf];
         }
-        uuid = uuid.join('');
-        config['sessionId'] = uuid;
+        config['sessionId'] = uuid.join('');
         //console.log("sessionId", uuid);
         if (response !== 0) {
             console.log("Response != 0", response);
@@ -153,10 +152,10 @@ app.post('/agente/clisitef/finishTransaction', function(req, res) {
             serviceStatus: 0
         });
     }).catch(x => {
-        console.log("ERRO FINALIZA", x);
+        console.log("ERRO FINALIZAR", x);
         res.json(x);
     })
     
 });
 
-console.log('Message RESTful API server started on: ' + port);
+console.log('Webservice na porta: ' + port);

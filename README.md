@@ -31,6 +31,8 @@ Adicione o pacote no seu projeto utilizando `yarn add node-sitef` ou `npm instal
 
 Este passo é muito importante, pois, mesmo que você consiga instanciar o objeto do SiTef, quando você tentar executar qualquer função será retornado zero (sucesso). O motivo disso é desconhecido, é uma particularidade da DLL.
 
+**Lembre-se também de verificar se a DLL que você está instanciando é para versão de linux que você possui (x86 ou x64), o Raspberry Pi necessita de uma versão especifica para processadores ARM**
+
 Por fim, crie uma pasta `bin` na sua aplicação (ou algum outro nome de sua preferência) e adicione as DLLs do SiTef. Elas serão utilizadas para instanciar o client.
 
 ## :fire: Utilização
@@ -66,6 +68,11 @@ yarn example:basic
 # funções da biblioteca. Nesse client é possível realizar toda a função de
 # pagamento descrita na documentação da Software Express
 yarn example:client
+```
+CliSiTef.ini
+```sh
+[PinPadCompartilhado]
+Porta=/dev/ttyACM0
 ```
 
 ## :rocket: Tecnologias
