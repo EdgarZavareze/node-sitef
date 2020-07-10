@@ -60,6 +60,26 @@ int configuraIntSiTefInterativo(const char *ip, const char *terminal, const char
       loja,
       reservado);
 }
+int configuraIntSiTefInterativoEx(const char *ip, const char *terminal, const char *loja, const char *reservado, const char *paramAdicionais)
+{
+  if (!handler)
+
+    throw("Carregue a DLL do SiTef!");
+
+  #ifdef _WIN32
+  ConfiguraIntSiTefInterativoEx configuraSitefEx = (ConfiguraIntSiTefInterativoEx)GetProcAddress(handler, "ConfiguraIntSiTefInterativoEx");
+  #endif
+
+  #ifdef linux
+  ConfiguraIntSiTefInterativoEx configuraSitefEx = (ConfiguraIntSiTefInterativoEx)dlsym(handler, "ConfiguraIntSiTefInterativoEx");
+  #endif
+
+  return configuraSitefEx(
+      ip,
+      terminal,
+      loja,
+      reservado);
+}
 
 int verificaPresencaPinPad()
 {
@@ -180,6 +200,10 @@ Object Init(Env env, Object exports)
 
   exports.Set(
       String::New(env, "configuraIntSiTefInterativo"),
+      Function::New(env, ConfigPromise::Create));
+
+exports.Set(
+      String::New(env, "configuraIntSiTefInterativoEx"),
       Function::New(env, ConfigPromise::Create));
 
   exports.Set(

@@ -36,6 +36,19 @@ export default class SiTef {
       );
     });
   }
+  configuraIntSiTefInterativoEx(parametros: any): Promise<number> {
+    const { ip, loja, terminal, reservado, paramAdicionais } = parametros;
+
+    return createPromise<number>(() => {
+      return library.configuraIntSiTefInterativoEx(
+        ip,
+        loja,
+        terminal,
+        reservado || '',
+        paramAdicionais
+      );
+    });
+  }
 
   verificarPresenca(): Promise<number> {
     return createPromise<number>(() => {

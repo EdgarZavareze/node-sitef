@@ -6,6 +6,13 @@ export interface ILibrary {
     terminal: string,
     reservado: string
   ) => number;
+  configuraIntSiTefInterativoEx: (
+    ip: string,
+    loja: string,
+    terminal: string,
+    reservado: string,
+    paramsAdicionais: string,
+  ) => number;
   verificaPresencaPinPad: () => number;
   leSimNaoPinPad: (mensagem: string) => number;
   escreveMensagemPermanentePinPad: (mensagem: string) => number;
@@ -41,6 +48,7 @@ export interface IParametrosConfiguracao {
   loja: string;
   terminal: string;
   reservado?: string;
+  paramsAdicionais: string;
 }
 
 export interface IParametrosIniciarFuncao {
